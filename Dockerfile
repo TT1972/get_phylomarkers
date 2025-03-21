@@ -1,4 +1,4 @@
-## Dockerfile version 2025-03-21, associated with GitHub release v2.2.1_2024-04-18 (TT1972 commit)
+## Dockerfile version 2025-03-21, associated with GitHub release v2.2.1_2024-04-18
 # - build images using as context the cloned get_phylomarkers GitHub repository
 #     based on latest ubuntu (jammy) and r-base (4.2.2)
 # - runs 24 tests during the final image's build stage & sets ENV R_LIBS_SITE
