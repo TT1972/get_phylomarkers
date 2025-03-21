@@ -20,44 +20,21 @@ LABEL reference="PMID:29765358 <https://pubmed.ncbi.nlm.nih.gov/29765358/>"
 LABEL license="GPLv3 <https://www.gnu.org/licenses/gpl-3.0.html>"
 
 # Install required Linux tools
-RUN apt update && \
-    apt install --no-install-recommends -y \
-        software-properties-common \
-        dirmngr \
-        bash-completion \
-        bc \
-        build-essential \
-        cpanminus \
-        curl \
-        gcc \
-        git \
-        default-jre \
-        libssl-dev \
-        make \
-        parallel \
-        wget && \
-    apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-    cpanm Term::ReadLine
+RUN apt update
+RUN apt install --no-install-recommends -y software-properties-common dirmngr bash-completion bc build-essential \
+    cpanminus curl gcc git default-jre libssl-dev make parallel wget
+RUN apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN cpanm Term::ReadLine
 
 # Install R and required packages
-RUN apt update -qq && \
-    apt install --no-install-recommends -y software-properties-common dirmngr && \
-    wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | \
-    sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc && \
-    add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/" && \
-    apt install --no-install-recommends -y r-base && \
-    apt install --no-install-recommends -y \
-        r-cran-ape \
-        r-cran-remotes \
-        r-cran-gplots \
-        r-cran-vioplot \
-        r-cran-plyr \
-        r-cran-dplyr \
-        r-cran-ggplot2 \
-        r-cran-stringi \
-        r-cran-stringr \
-        r-cran-seqinr && \
-    apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apt update -qq
+RUN apt install --no-install-recommends -y software-properties-common dirmngr
+RUN wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
+RUN add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
+RUN apt install --no-install-recommends -y r-base
+RUN apt install --no-install-recommends -y r-cran-ape r-cran-remotes r-cran-gplots r-cran-vioplot r-cran-plyr \
+    r-cran-dplyr r-cran-ggplot2 r-cran-stringi r-cran-stringr r-cran-seqinr
+RUN apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Clone get_phylomarkers and set working directory
 RUN git clone https://github.com/vinuesa/get_phylomarkers.git
@@ -70,14 +47,13 @@ RUN Rscript install_kdetrees_from_github.R
 ENV R_LIBS_SITE="/usr/local/lib/R/site-library:/usr/lib/R/site-library:/usr/lib/R/library:/opt/R/4.2.2/lib/R/library:/get_phylomarkers/lib/R"
 
 # Install Python 2.7 for PAUP and configure libraries
-RUN apt update && \
-    apt install --no-install-recommends -y python2.7 python2.7-dev && \
-    apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apt update
+RUN apt install --no-install-recommends -y python2.7 python2.7-dev
+RUN apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN cp /get_phylomarkers/lib/libnw.so /usr/local/lib && \
-    export LD_LIBRARY_PATH=/usr/local/lib && \
-    ldconfig
-
+RUN cp /get_phylomarkers/lib/libnw.so /usr/local/lib
+RUN export LD_LIBRARY_PATH=/usr/local/lib
+RUN ldconfig
 RUN chmod -R a+wr /get_phylomarkers/test_sequences
 
 # Add version tag to image
@@ -91,7 +67,9 @@ ENV USER=you
 USER you
 
 # Run get_phylomarkers tests on fully built image
-RUN make clean && make test && make clean
+RUN make clean
+RUN make test
+RUN make clean
 
 # Set working directory for user
 WORKDIR /home/you
