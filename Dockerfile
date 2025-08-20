@@ -60,7 +60,7 @@ r-cran-stringr \
 r-cran-seqinr \
 && apt clean && apt purge && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN git clone https://github.com/vinuesa/get_phylomarkers.git
+RUN git clone https://github.com/TT1972/get_phylomarkers.git
 WORKDIR /get_phylomarkers 
 
 # need to install kdetrees from the github repo, as it was removed from CRAN
