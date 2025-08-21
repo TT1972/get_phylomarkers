@@ -64,7 +64,13 @@ RUN git clone https://github.com/TT1972/get_phylomarkers.git
 WORKDIR /get_phylomarkers 
 
 # need to install kdetrees from the github repo, as it was removed from CRAN
-RUN Rscript install_kdetrees_from_github.R
+# RUN Rscript install_kdetrees_from_github.R
+
+# Copy local kdetrees source tarball into the image
+COPY kdetrees_*.tar.gz /tmp/
+
+# Install kdetrees from tarball
+RUN R CMD INSTALL /tmp/kdetrees_*.tar.gz
 
 # set R paths; run R -q -e '.libPaths()' on Linux (Ubuntu) host, and docker container;
 ENV R_LIBS_SITE=/usr/local/lib/R/site-library:/usr/lib/R/site-library/:/usr/lib/R/library:/opt/R/4.2.2/lib/R/library:/get_phylomarkers/lib/R
