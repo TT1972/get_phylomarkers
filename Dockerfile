@@ -56,11 +56,12 @@ r-cran-vioplot \
 r-cran-plyr \
 r-cran-dplyr \
 r-cran-ggplot2 \
-r-cran-hgm \
 r-cran-stringi \
 r-cran-stringr \
 r-cran-seqinr \
 && apt clean && apt purge && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN R -q -e "install.packages('hgm', repos='https://cloud.r-project.org')"
 
 RUN git clone https://github.com/TT1972/get_phylomarkers.git
 WORKDIR /get_phylomarkers 
