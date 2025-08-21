@@ -49,12 +49,14 @@ RUN apt install --no-install-recommends -y r-base
 #RUN add-apt-repository ppa:c2d4u.team/c2d4u4.0+
 RUN apt install --no-install-recommends -y \
 r-cran-ape \
+r-cran-distory \
 r-cran-remotes \
 r-cran-gplots \
 r-cran-vioplot \
 r-cran-plyr \
 r-cran-dplyr \
 r-cran-ggplot2 \
+r-cran-hgm \
 r-cran-stringi \
 r-cran-stringr \
 r-cran-seqinr \
