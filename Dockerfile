@@ -50,6 +50,9 @@ RUN apt install --no-install-recommends -y r-base
 RUN apt install --no-install-recommends -y \
 r-cran-ape \
 r-cran-remotes \
+r-cran-distory \
+r-cran-hgm \
+r-cran-ggplot2 \
 r-cran-gplots \
 r-cran-vioplot \
 r-cran-plyr \
